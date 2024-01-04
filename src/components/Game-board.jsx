@@ -6,7 +6,7 @@ const initialGameBoard = [
   [null, null, null]
 ]
 
-export default function GameBoard(){
+export default function GameBoard({activePlayer, setActivePlayer}){
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handleClick (rowIndex, columnIndex, symbol){
@@ -15,11 +15,15 @@ export default function GameBoard(){
       updatedGameBoard[rowIndex][columnIndex] = symbol;
       return updatedGameBoard;
     });
+    setActivePlayer()
   }
   return <ol id="game-board">
     {gameBoard.map((row, rowIndex) => <li key={rowIndex}>
       <ol>
-        {row.map((symbol, colIndex) => <li key={colIndex}><button onClick={() => handleClick(rowIndex, colIndex, 'X')}>{symbol}</button></li>)}
+        {row.map((symbol, colIndex) =>
+        <li key={colIndex}>
+          <button onClick={() =>handleClick(rowIndex, colIndex, activePlayer)}>{symbol}</button>
+        </li>)}
       </ol>
     </li>)}
   </ol>
