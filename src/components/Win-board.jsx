@@ -1,7 +1,7 @@
-export default function WinBoard({winner}){
+export default function WinBoard({winner, handleReplay}){
   return <div id="game-over">
     <h2>Game over!</h2>
-    <p>{winner} won!</p>
-    <button>Replay</button>
+    <p>{winner ? `${winner} won!` : `It's a draw!`}</p>
+    <button onClick={handleReplay}>Replay</button>
   </div>
 }
