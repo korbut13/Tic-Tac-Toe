@@ -1,28 +1,23 @@
-import { useState } from "react";
-
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null]
 ]
 
-export default function GameBoard({activePlayer, setActivePlayer}){
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
-
-  function handleClick (rowIndex, columnIndex, symbol){
-    setGameBoard(prevGameBoard => {
-      const updatedGameBoard = [...gameBoard.map(nestedArray => [...nestedArray])];
-      updatedGameBoard[rowIndex][columnIndex] = symbol;
-      return updatedGameBoard;
-    });
-    setActivePlayer()
+export default function GameBoard({activePlayer, gameTurns, handleTurn}){
+  const gameBoard = initialGameBoard;
+  for(const turn of gameTurns){
+    const rowIndex = turn.square.row;
+    const columnIndex = turn.square.col;
+    const symbol = turn.player
+    gameBoard[rowIndex][columnIndex] =symbol;
   }
   return <ol id="game-board">
     {gameBoard.map((row, rowIndex) => <li key={rowIndex}>
       <ol>
         {row.map((symbol, colIndex) =>
         <li key={colIndex}>
-          <button onClick={() =>handleClick(rowIndex, colIndex, activePlayer)}>{symbol}</button>
+          <button onClick={() =>handleTurn(rowIndex, colIndex, activePlayer)} disabled={symbol !==null}>{symbol}</button>
         </li>)}
       </ol>
     </li>)}
