@@ -10,10 +10,11 @@ export default function GameBoard(){
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handleClick (rowIndex, columnIndex, symbol){
-    const updatedGameBoard = [...gameBoard.map(nestedArray => [...nestedArray])];
-    updatedGameBoard[rowIndex][columnIndex] = symbol;
-    setGameBoard(updatedGameBoard);
-    return updatedGameBoard;
+    setGameBoard(prevGameBoard => {
+      const updatedGameBoard = [...gameBoard.map(nestedArray => [...nestedArray])];
+      updatedGameBoard[rowIndex][columnIndex] = symbol;
+      return updatedGameBoard;
+    });
   }
   return <ol id="game-board">
     {gameBoard.map((row, rowIndex) => <li key={rowIndex}>
